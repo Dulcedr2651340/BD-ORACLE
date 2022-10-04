@@ -1,0 +1,45 @@
+select * from v$tablespace;
+select * FROM dba_tablespace;
+
+CODIGO DE ORACLE
+
+select * from v$tablespace;
+
+select * from dba_tablespaces;
+
+--CREAR UN TABLESPACE DE TRABAJO                
+CREATE TABLESPACE VENTAS                                                                --      NOMBRE DEL TABLESPACE                                             
+    DATAFILE 'H:\BASE DE DATOS\ORACLE\EJERCICIOS\MIS EJERCICIOS\VENTAS_DATA.DBF'        --      ARCHIVO DE DATOS QUE ALMACENARA LA DATA
+    SIZE 30M                                                                            --      TAMAÑO INICIAL DEL ARCHIVO
+    AUTOEXTEND ON NEXT 1M                                                               --      VALOR DE CRECIMIENTO
+    MAXSIZE 100M;                                                                       --      TAMAÑO MAXIMO DE CRECIMIENTO DEL ARCHIVO
+                                                                                        --      MAXSIZE UNLIMITED(POR DEFECTO)
+CREATE TABLESPACE COMPRAS
+    DATAFILE 'H:\BASE DE DATOS\ORACLE\EJERCICIOS\MIS EJERCICIOS\COMPRAS_DATA.DBF'
+    SIZE 20M;
+    
+    SELECT * FROM v$tablespace;
+    select * from dba_tablespaces;
+    
+    SELECT * FROM CLIENTE;
+    
+    --Creando un ususario con el TABLESPACE predetermindo del oracle 
+    CREATE USER usuario
+        IDENTIFIED BY "123";
+        
+    --Creando un usuario con el TABLESPACE prdeterminado ventas
+    CREATE USER ventas1
+        IDENTIFIED BY "123"
+        DEFAULT TABLESPACE VENTAS;
+        
+    --Creando un usuario con el TABLESPACE predeterminado para compras
+    CREATE USER compras1
+        IDENTIFIED BY "123"
+        DEFAULT TABLESPACE COMPRAS;
+        
+select * from dba_users; -- para ver la tabla
+
+select USERNAME, default_tablespace, TEMPORARY_TABLESPACE
+        FROM dba_users where username in ('USUARIO','VENTAS1','COMPRAS1','SYSTEM');
+        
+--CREANDO UN TABLESPACE TEMPORAL (ES USADO POR ORACLE PARA LOS ORDENAMIENTOS DE LAS TABLAS Y PROCESOS GRANDES DE CALCULO DE USUARIOS)
